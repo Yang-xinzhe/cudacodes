@@ -1,3 +1,0 @@
-/home/yangxinzhe/cudacodes/mat_mul/build/CMakeFiles/mat_mul.dir
-/home/yangxinzhe/cudacodes/mat_mul/build/CMakeFiles/edit_cache.dir
-/home/yangxinzhe/cudacodes/mat_mul/build/CMakeFiles/rebuild_cache.dir

@@ -454,7 +454,7 @@ int main() {
     cudaEventRecord(end);
     cudaEventSynchronize(end);
     cudaEventElapsedTime(&ms, start, end);
-    printf(">> naive_xgemm_kernel execute time: %.3f ms\n", ms);
+    printf(">> tiled_xgemm_1d_coarse_kernel execute time: %.3f ms\n", ms);
 
     cudaEventRecord(start);
     cudaMemcpy(C, C_gpu, c_size * sizeof(float), cudaMemcpyDeviceToHost);
