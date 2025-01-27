@@ -23,7 +23,7 @@ def benchmark_matmul(size):
     return (end_time - start_time) * 1000  # 转换为毫秒
 
 # 设置不同的矩阵大小
-sizes = [128, 256, 512, 1024, 2048, 4096, 8192, 16384]
+sizes = [128, 256, 512, 1024, 2048, 4096, 8192]
 times = []
 
 # 运行基准测试
@@ -40,7 +40,8 @@ for size in sizes:
 
 # 绘制图表
 plt.figure(figsize=(10, 6))
-plt.plot(sizes, times, 'bo-', linewidth=2, markersize=8)
+x_positions = np.arange(len(sizes))
+plt.plot(x_positions, times, 'bo-', linewidth=2, markersize=8)
 plt.grid(True)
 plt.xlabel('Matrix Size')
 plt.ylabel('Execute time (ms)')
@@ -49,13 +50,18 @@ plt.title('MatMul benchmark')
 # 添加数据标签
 for i, (size, time) in enumerate(zip(sizes, times)):
     plt.annotate(f'{time:.2f}ms', 
-                (size, time), 
+                (x_positions[i], time), 
                 textcoords="offset points", 
                 xytext=(0,10), 
                 ha='center')
 
 # 设置x轴刻度
-plt.xticks(sizes)
+plt.xticks(x_positions, sizes)
+
+# 调整y轴范围，让小值更明显
+ymin = min(times) * 0.5  # 下限设为最小值的一半
+ymax = max(times) * 1.2  # 上限留出一些空间给标签
+plt.ylim(ymin, ymax)
 
 # 保存图表
 plt.savefig('matmul_benchmark.png', dpi=300, bbox_inches='tight')
