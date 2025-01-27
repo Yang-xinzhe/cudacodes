@@ -374,9 +374,9 @@ void benchmark_all_kernels(
 }
 
 int main() {
-    int M = 1024;
-    int N = 1024; 
-    int K = 1024;
+    int M = 8192;
+    int N = 8192; 
+    int K = 8192;
 
     int a_size = M * K;
     int b_size = K * N;

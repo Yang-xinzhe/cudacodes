@@ -24,7 +24,8 @@ def benchmark_matmul(size):
 
 # 设置不同的矩阵大小
 sizes = [128, 256, 512, 1024, 2048, 4096, 8192]
-times = []
+times = []  # PyTorch的时间
+cuda_times = [0.013, 0.022, 0.095, 0.629, 5.130, 39.659, 317.064]  # CUDA的时间
 
 # 运行基准测试
 print("开始基准测试...")
@@ -36,33 +37,44 @@ for size in sizes:
         avg_time += benchmark_matmul(size)
     avg_time /= runs
     times.append(avg_time)
-    print(f"平均耗时: {avg_time:.3f} ms")
+    print(f"PyTorch平均耗时: {avg_time:.3f} ms")
 
 # 绘制图表
 plt.figure(figsize=(10, 6))
 x_positions = np.arange(len(sizes))
-plt.plot(x_positions, times, 'bo-', linewidth=2, markersize=8)
+
+# 绘制PyTorch结果
+plt.plot(x_positions, times, 'bo-', linewidth=2, markersize=8, label='PyTorch')
+# 绘制CUDA结果
+plt.plot(x_positions, cuda_times, 'ro-', linewidth=2, markersize=8, label='CUDA')
+
 plt.grid(True)
 plt.xlabel('Matrix Size')
 plt.ylabel('Execute time (ms)')
 plt.title('MatMul benchmark')
+plt.legend()
 
 # 添加数据标签
-for i, (size, time) in enumerate(zip(sizes, times)):
-    plt.annotate(f'{time:.2f}ms', 
-                (x_positions[i], time), 
+for i, (torch_time, cuda_time) in enumerate(zip(times, cuda_times)):
+    plt.annotate(f'{torch_time:.2f}ms', 
+                (x_positions[i], torch_time), 
                 textcoords="offset points", 
                 xytext=(0,10), 
-                ha='center')
+                ha='center',
+                color='blue')
+    plt.annotate(f'{cuda_time:.2f}ms', 
+                (x_positions[i], cuda_time), 
+                textcoords="offset points", 
+                xytext=(0,-20),  # 增加与x轴的距离
+                ha='center',
+                color='red')
 
-# 设置x轴刻度
 plt.xticks(x_positions, sizes)
 
-# 调整y轴范围，让小值更明显
-ymin = min(times) * 0.5  # 下限设为最小值的一半
-ymax = max(times) * 1.2  # 上限留出一些空间给标签
+
+ymin = min(min(times), min(cuda_times)) * 0.1  # 从0.5改为0.1，使小值部分跨度更大
+ymax = max(max(times), max(cuda_times)) * 1.2
 plt.ylim(ymin, ymax)
 
-# 保存图表
 plt.savefig('matmul_benchmark.png', dpi=300, bbox_inches='tight')
 plt.show() 
