@@ -422,7 +422,8 @@ int main() {
     grid_size = dim3(CEIL_DIV(N, TILE_SIZE), CEIL_DIV(M, TILE_SIZE));
 #endif
 #ifdef TILE_COARSE_GEMM
-    block_size = dim3(BM * BN / COURSE_FACTOR);
+    // block_size = dim3(BM * BN / COURSE_FACTOR);
+    block_size = dim3(512);
     grid_size = dim3(CEIL_DIV(N, BN), CEIL_DIV(M, BM));
 #endif
 
