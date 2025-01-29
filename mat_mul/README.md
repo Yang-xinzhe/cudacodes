@@ -2,6 +2,7 @@
 
 Matrix multiplication is a fundamental operation in linear algebra and plays a crucial role in many computational tasks. For two matrices A (M×K) and B (K×N), their product C (M×N) is computed as:
 ![alt text](media/mat_mul.png)
+$$A_{M \times K} \times B_{K \times N} = C_{M \times N}$$
 
 $$c_{mn} = \sum_{k=0}^{K-1} a_{mk} \cdot b_{kn}$$
 
@@ -20,7 +21,34 @@ for (int k = 0; k < K; k++) {
 }
 C_gpu[row * N + col] = sum;
 ```
-This naive 1D GEMM kernel *assigns one thread per output element* in $C$,iterates over the shared dimension $K$,and performs the matrix multiplication directly in global memory. While functional, it can be significantly optimized for better performance.
+This naive 1D GEMM kernel **assigns one thread per output element** in $C$,iterates over the shared dimension $K$,and performs the matrix multiplication directly in global memory. While functional, it can be significantly optimized for better performance.
+
+## Tiled_xgemm_kernel
+![alt text](media/tiled_matrix.png)
+``tiled_xgemm_kernel``,this kernel uses **shared memory tiling**, significantly reducing **global memory accesses** and improving **memory coalescing**. 
+
+$$
+\begin{aligned}
+\mathbf{A} &=
+\begin{bmatrix}
+A_{11} & A_{12} & \cdots & A_{1p} \\
+A_{21} & A_{22} & \cdots & A_{2p} \\
+\vdots & \vdots & \ddots & \vdots \\
+A_{m1} & A_{m2} & \cdots & A_{mp}
+\end{bmatrix}
+\quad
+\mathbf{B} &=
+\begin{bmatrix}
+B_{11} & B_{12} & \cdots & B_{1n} \\
+B_{21} & B_{22} & \cdots & B_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+B_{p1} & B_{p2} & \cdots & B_{pn}
+\end{bmatrix}
+\end{aligned}
+$$
+
+
+
 
 
 ![alt text](media/performance_comparison.png)
