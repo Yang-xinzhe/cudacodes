@@ -2,6 +2,7 @@
 
 Matrix multiplication is a fundamental operation in linear algebra and plays a crucial role in many computational tasks. For two matrices A (M×K) and B (K×N), their product C (M×N) is computed as:
 ![alt text](media/mat_mul.png)
+
 $$A_{M \times K} \times B_{K \times N} = C_{M \times N}$$
 
 $$c_{mn} = \sum_{k=0}^{K-1} a_{mk} \cdot b_{kn}$$
@@ -31,18 +32,18 @@ $$
 \begin{aligned}
 \mathbf{A} &=
 \begin{bmatrix}
-A_{11} & A_{12} & \cdots & A_{1p} \\
-A_{21} & A_{22} & \cdots & A_{2p} \\
+A_{00} & A_{01} & \cdots & A_{0p} \\
+A_{10} & A_{11} & \cdots & A_{1p} \\
 \vdots & \vdots & \ddots & \vdots \\
-A_{m1} & A_{m2} & \cdots & A_{mp}
+A_{m0} & A_{m1} & \cdots & A_{mp}
 \end{bmatrix}
 \quad
 \mathbf{B} &=
 \begin{bmatrix}
-B_{11} & B_{12} & \cdots & B_{1n} \\
-B_{21} & B_{22} & \cdots & B_{2n} \\
+B_{00} & B_{01} & \cdots & B_{0n} \\
+B_{01} & B_{11} & \cdots & B_{1n} \\
 \vdots & \vdots & \ddots & \vdots \\
-B_{p1} & B_{p2} & \cdots & B_{pn}
+B_{p0} & B_{p1} & \cdots & B_{pn}
 \end{bmatrix}
 \end{aligned}
 $$
