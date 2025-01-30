@@ -58,6 +58,7 @@ $$
 $$
 C_{ij} = \sum_{k=1}^{K} A_{ik} \cdot B_{kj}
 $$
+
 ```tile_xgemm_kernel```Each thread is responsible for calculating one element of the result matrix uses **shared memory** to load and store submatrices (tiles) of $A$ and $B$,thereby optimizing memory access and improving performance on GPUs.
 
 Each thread is responsible for calculating one element of the result matrix $C$,corresponding to a particular $row$ and $col$ 
