@@ -1,4 +1,7 @@
 # cudacodes
+
 ## GEMM
-![alt text](mat_mul/media/mat_mul.png)
-![alt text](mat_mul/media/tiled_matrix.png)
+- [Learning CUDA Programming Through Matrix Multiplication Optimization](https://github.com/Yang-xinzhe/cudacodes/tree/main/mat_mul)
+  - Implementation of matrix multiplication from naive to tiled version
+  - Performance comparison with PyTorch
+  - Detailed optimization process and benchmarks
