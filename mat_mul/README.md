@@ -30,32 +30,30 @@ This naive 1D GEMM kernel **assigns one thread per output element** in $C$,itera
 
 $$
 \begin{aligned}
-\mathbf{A} &=
-\begin{bmatrix}
+\mathbf{A} &= \begin{bmatrix} 
 A_{00} & A_{01} & \cdots & A_{0p} \\
 A_{10} & A_{11} & \cdots & A_{1p} \\
 \vdots & \vdots & \ddots & \vdots \\
-A_{m0} & A_{m1} & \cdots & A_{mp}
-\end{bmatrix}
-\quad
-\times
-\mathbf{B} &=
-\begin{bmatrix}
+A_{m0} & A_{m1} & \cdots & A_{mp} 
+\end{bmatrix} 
+\quad \times 
+\quad 
+\mathbf{B} &= \begin{bmatrix} 
 B_{00} & B_{01} & \cdots & B_{0n} \\
-B_{01} & B_{11} & \cdots & B_{1n} \\
+B_{10} & B_{11} & \cdots & B_{1n} \\
 \vdots & \vdots & \ddots & \vdots \\
-B_{p0} & B_{p1} & \cdots & B_{pn}
+B_{p0} & B_{p1} & \cdots & B_{pn} 
 \end{bmatrix}
-=
-\mathbf{C} &=
-\begin{bmatrix}
+= 
+\mathbf{C} &= \begin{bmatrix} 
 C_{00} & C_{01} & \cdots & C_{0n} \\
-C_{01} & C_{11} & \cdots & C_{1n} \\
+C_{10} & C_{11} & \cdots & C_{1n} \\
 \vdots & \vdots & \ddots & \vdots \\
-C_{m0} & C_{m1} & \cdots & C_{mn}
+C_{m0} & C_{m1} & \cdots & C_{mn} 
 \end{bmatrix}
 \end{aligned}
 $$
+
 $$
 C_{ij} = \sum_{k=1}^{K} A_{ik} \cdot B_{kj}
 $$
