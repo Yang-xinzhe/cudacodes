@@ -38,6 +38,7 @@ A_{10} & A_{11} & \cdots & A_{1p} \\
 A_{m0} & A_{m1} & \cdots & A_{mp}
 \end{bmatrix}
 \quad
+\times
 \mathbf{B} &=
 \begin{bmatrix}
 B_{00} & B_{01} & \cdots & B_{0n} \\
@@ -45,13 +46,38 @@ B_{01} & B_{11} & \cdots & B_{1n} \\
 \vdots & \vdots & \ddots & \vdots \\
 B_{p0} & B_{p1} & \cdots & B_{pn}
 \end{bmatrix}
+=
+\mathbf{C} &=
+\begin{bmatrix}
+C_{00} & C_{01} & \cdots & C_{0n} \\
+C_{01} & C_{11} & \cdots & C_{1n} \\
+\vdots & \vdots & \ddots & \vdots \\
+C_{m0} & C_{m1} & \cdots & C_{mn}
+\end{bmatrix}
 \end{aligned}
 $$
+$$
+C_{ij} = \sum_{k=1}^{K} A_{ik} \cdot B_{kj}
+$$
+```tile_xgemm_kernel```Each thread is responsible for calculating one element of the result matrix uses **shared memory** to load and store submatrices (tiles) of $A$ and $B$,thereby optimizing memory access and improving performance on GPUs.
 
+Each thread is responsible for calculating one element of the result matrix $C$,corresponding to a particular $row$ and $col$ 
+```
+__shared__ float a_smem[TILE_SIZE][TILE_SIZE];
+__shared__ float b_smem[TILE_SIZE][TILE_SIZE];
+```
+**Tiles** are of size $TILE\_SIZE \times TILE\_SIZE$,allowing multiple threads to work on smaller sections of the matrices at a time, improving the efficiency of memory access.
 
+- A 1024x1024 matrix is divided into 32x32 smaller sub-matrices, each of size 32x32, for computation.
 
+```
+for(int i = 0 ; i < TILE_SIZE ; i++) {
+    sum += a_smem[threadIdx.y][i] * b_smem[i][threadIdx.x];
+}
+```
 
-
+Each thread computes a part of the dot product between a row of $A$ ans a column of $B$ by iterating over the tile size and performing element-wise multiplication.
+## Benchmark GEMM
 ![alt text](media/performance_comparison.png)
 
 ![alt text](media/relative_performance.png)
