@@ -19,6 +19,9 @@
 >> Theoretical Max GFLOPS: 14561.28
 >> Maximum Memory Bandwidth: 256.03 GB/s
 ```
+- [CUDA Memory hierarchy](https://developer.nvidia.com/blog/cuda-refresher-cuda-programming-model/)
+  - **CUDA Core → Registers → Shared Memory → L1 Cache → L2 Cache → Global Memory (VRAM)**
+![alt text](media/memory-hierarchy-in-gpus-1.png)
 ## GEMM
 - [Learning CUDA Programming Through Matrix Multiplication Optimization](https://github.com/Yang-xinzhe/cudacodes/tree/main/mat_mul)
   - Implementation of matrix multiplication from naive to tiled version
